@@ -1,0 +1,10 @@
+*~
+\#*
+.\#*
+*.swp
+.DS_*
+node_modules
+public
+assets/javascripts/vendor
+.mimosa
+mimosa-config-documented.*

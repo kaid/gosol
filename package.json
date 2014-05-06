@@ -1,0 +1,10 @@
+{
+    "name": "gosol",
+    "version": "0.0.1",
+    "description": "A Mimosa starter skeleton",
+    "devDependencies": {
+        "mimosa-livescript": "*",
+        "mimosa-stylus": "*",
+        "mimosa-html-templates": "*"
+    }
+}

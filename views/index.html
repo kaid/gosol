@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app="gosol">
+  <head>
+    <title>Gosol</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+
+    <h1>Gosol</h1>
+
+    <div ng-view></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/reload-client.js"></script>
+    <script src="/javascripts/vendor/requirejs/require.js" data-main="/javascripts/main.js"></script>
+  </body>
+</html>
