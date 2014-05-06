@@ -17,6 +17,10 @@ exports.config = {
     "htmlTemplates": {
         "extensions": ["html"]
     },
+    
+    "watch": {
+        exclude: [/[/\\](\.|~)[^/\\]+$/, /~$/, /#$/]
+    },
 
     "server": {
         "path": "server.ls",
