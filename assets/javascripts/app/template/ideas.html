@@ -1,0 +1,4 @@
+<h1>Ideas</h1>
+<div ng-repeat="idea in ideas | orderByPriority">
+  idea: <a href="#/ideas/{{idea.$id}}">{{idea.content}}</a>
+</div>
