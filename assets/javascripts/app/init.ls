@@ -1,5 +1,8 @@
-deps = <[angular templates angular-route app/controllers]>
-angular, templates <- define deps
+require \angular
+require \angular-route
+require \./controllers
+
+templates = require \templates
 
 app = angular.module \gosol <[ngRoute gosol.controllers]>
 

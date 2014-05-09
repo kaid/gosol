@@ -1,4 +1,5 @@
-angular <- define <[angular app/providers]>
+require \angular
+require \./providers
 
 controllers = angular.module \gosol.controllers <[gosol.providers]>
 
@@ -10,6 +11,7 @@ controllers.controller \IdeasController do
 controllers.controller \IdeaController do
   [\$scope \$routeParams \ideaFactory ($scope, $params, ideaFactory)->
     $scope.idea = ideaFactory($params.id)
+    console.log $scope.idea
   ]
 
 controllers.controller \GoalsController do
