@@ -1,0 +1,11 @@
+<h1>Goal: {{id}}</h1>
+<input type="text" ng-model="goal.name">
+<input type="text" ng-model="goal.desc">
+<button ng-click="save()">save</button>
+<a href="/#/ideas?goalId={{id}}">Show ideas</a>
+<h2>Plans:</h2>
+<ul ng-repeat="plan in plans | keyFilter">
+  <li>
+    <a href="/#/plans/{{plan.$name}}">{{plan.$name}}</a>
+  </li>
+</ul>

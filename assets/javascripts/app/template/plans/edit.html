@@ -1,0 +1,7 @@
+<h1>Plan: {{id}}</h1>
+<a href="javascript:;" ng-click="link(plan)">New Goal</a>
+<div id="goals">
+  <a class="goal" ng-repeat="goal in goals | keyFilter" href="/#/goals/{{goal.$name}}">
+    <div class="goal-name">{{goal.name || goal.$name}}</div>
+  </a>
+</div>

@@ -1,0 +1,7 @@
+<h1>Toplevel</h1>
+<a href="/#/goals/new?toplevel={{toplevel}}">Add Goal</a>
+<div id="goals">
+  <a class="goal" ng-repeat="goal in goals | keyFilter" href="/#/goals/{{goal.$name}}">
+    <div class="goal-name">{{goal.name}}</div>
+  </a>
+</div>

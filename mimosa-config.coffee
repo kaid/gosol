@@ -16,6 +16,8 @@ exports.config =
 
     template:
       wrapType: "common"
+      nameTransform: (path)->
+        path.match(/template\/(.*)$/)[1]
 
     htmlTemplates:
       extensions: ["html"]
