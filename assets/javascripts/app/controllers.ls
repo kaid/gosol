@@ -14,16 +14,16 @@ controllers.controller \IdeasIndex do
     $scope.ideas = IdeaService.all!
     $scope.link = (idea)->
       if goalId
-        res <- PlanService.new(ideaId: idea.$name, goalId: goalId).then
+        res <- PlanService.new(ideaId: idea.$name, goalId: goalId, num: 0).then
         planId = res.context.addedKey.split("/")[*-1]
-        $location.path "/plans/#planId"
-      else $location.path "/ideas/#{idea.$name}"
+        $location.url "/plans/#planId"
+      else $location.url "/ideas/#{idea.$name}"
 
 controllers.controller \IdeasNew do
   ($scope, $location, IdeaService)->
     $scope.save = ->
       <- IdeaService.new(content: $scope.ideaContent, type: \text).then
-      $location.path(\/ideas)
+      $location.url(\/ideas)
 
 controllers.controller \IdeasEdit do
   ($scope, $routeParams, $location, IdeaService)->
@@ -31,7 +31,7 @@ controllers.controller \IdeasEdit do
     $scope.idea = IdeaService.find($scope.id)
     $scope.save = ->
       $scope.idea.$key(\content).$set($scope.idea.content)
-      $location.path(\/ideas)
+      $location.url(\/ideas)
 
 
 
@@ -45,13 +45,18 @@ controllers.controller \GoalsNew do
     $scope.save = ->
       toplevel = $routeParams.toplevel == \true
 
-      params = do
+      GoalService.new do
         name:     $scope.goalName
         desc:     $scope.goalDesc
         toplevel: toplevel
 
-      GoalService.new(params)
-      $location.path(\/)
+      $location.url(\/)
+
+controllers.controller \GoalsCreate do
+  ($scope, $location, $routeParams, GoalService)->
+    res <- GoalService.new($routeParams).then
+    goalId = res.context.addedKey.split("/")[*-1]
+    $location.url("/goals/#goalId")
 
 controllers.controller \GoalsEdit do
   ($scope, $routeParams, GoalService, PlanService, $location)->
@@ -61,24 +66,21 @@ controllers.controller \GoalsEdit do
     $scope.save = ->
       goal.$key(\name).$set($scope.goal.name)
       goal.$key(\desc).$set($scope.goal.content)
-      $location.path(\/toplevel) if goal.toplevel == \true
-      $location.path("/plans/#{goal.planId}") if goal.planId
+      $location.url(\/toplevel) if goal.toplevel == \true
+      $location.url("/plans/#{goal.planId}") if goal.planId
 
 
 
-
-controllers.controller \PlansIndex do
-  ($scope, $routeParams)->
-    console.log $routeParams
 
 controllers.controller \PlansEdit do
-  ($scope, $routeParams, PlanService, $location, GoalService)->
+  ($scope, $routeParams, PlanService, GoalService, $location)->
     $scope.id = id = $routeParams.id
-    $scope.plan = PlanService.find(id)
-    $scope.link = (plan)->
-      res <- GoalService.new(planId: id).then
-      goalId = res.context.addedKey.split("/")[*-1]
-      console.error "goalId!!!!: #goalId"
-      $location.path "/goals/#goalId"
-      
+    $scope.plan = plan = PlanService.find(id)
     $scope.goals = GoalService.where(planId: id)
+    $scope.create = ->
+      res <- GoalService.new(planId: id, pos: plan.num + 1).then
+      plan.num++ 
+      goalId = res.context.addedKey.split("/")[*-1]
+      console.log(goalId)
+      $location.url("/goals/#goalId")
+      console.log(goalId)
