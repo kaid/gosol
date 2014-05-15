@@ -1,7 +1,7 @@
 <h1>Ideas</h1>
 <a ng-if="!goalId" href="/#/ideas/new">Add New</a>
 <div id="ideas">
-  <a class="idea" ng-repeat="idea in ideas | keyFilter" ng-switch="idea.type" ng-click="link(idea)" href="javascript:;">
+  <a class="idea" ng-repeat="idea in ideas" ng-switch="idea.type" ng-click="link(idea)" href="javascript:;">
     <div class="idea-content" ng-switch-when="text">{{idea.content}}</div>
     <img class="idea-content" ng-switch-when="image" ng-src="{{idea.content}}">
   </a>

@@ -4,8 +4,8 @@
 <button ng-click="save()">save</button>
 <a href="/#/ideas?goalId={{id}}">Show ideas</a>
 <h2>Plans:</h2>
-<ul ng-repeat="plan in plans | keyFilter">
+<ul ng-repeat="plan in plans">
   <li>
-    <a href="/#/plans/{{plan.$name}}">{{plan.$name}}</a>
+    <a href="/#/plans/{{plan._id}}">{{plan._id}}</a>
   </li>
 </ul>

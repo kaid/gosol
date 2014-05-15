@@ -1,38 +1,45 @@
-providers = angular.module \gosol.providers, <[goangular]>
-root      = \https://goinstant.net/ae10d8f555c8/gosol
+providers = angular.module \gosol.providers <[pouchdb]>
 
-providers.config do
-  ($goConnectionProvider)->
-    $goConnectionProvider.$set root
+providers.factory \GosolDb (pouchdb)->
+  pouchdb.create(\gosol)
 
-providers.factory \ModelService do
-  ($goKey, $goQuery)->
-    (modelName, paramsbuilder)!->
-      models = $goKey(modelName).$sync!
+providers.factory \ModelService (GosolDb)->
+  (collectionName, propsBuilder)!->
+    @where  = (cond)->
+      map = (doc, emit)-> emit(doc) if cond(doc)
+      GosolDb.query({map: map} {reduce: false})
 
-      @all   = -> models
-      @where = (cond)-> $goQuery(modelName, cond, {}).$sync!
-      @find  = (id)-> models.$key(id).$sync!
-      @new   = (params)->
-        models.$add paramsbuilder(params)
+    @all = -> 
+      @where (doc)-> doc.$collection == collectionName
 
+    @find = (id)->
+      GosolDb.get(id)
+
+    @create = (params)->
+      props = propsBuilder(params)
+      props.$collection = collectionName
+      GosolDb.post props
+
+    @update = (entity)->
+      GosolDb.put entity
 
 providers.factory \IdeaService do
   (ModelService)->
-    {planId, name, desc, toplevel} <- new ModelService \ideas
+    {content, type} <- new ModelService \ideas
     content: content
     type:    type
 
 providers.factory \GoalService do
   (ModelService)->
-    {planId, name, desc, toplevel} <- new ModelService \goals
+    {planId, name, desc, toplevel, pos} <- new ModelService \goals
     planId:   planId
     name:     name
     desc:     desc
     toplevel: toplevel
+    pos:      pos
 
 providers.factory \PlanService do
   (ModelService)->
-    {planId, name, desc, toplevel} <- new ModelService \plans
+    {ideaId, goalId} <- new ModelService \plans
     ideaId: ideaId
     goalId: goalId

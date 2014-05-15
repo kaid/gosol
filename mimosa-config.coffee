@@ -47,15 +47,19 @@ exports.config =
           path: "javascripts/vendor/jquery/jquery"
           exports: "$"
 
+        pouchdb:
+          path: "javascripts/vendor/pouchdb/pouchdb-nightly"
+          exports: "PouchDB"
+
       aliases:
         templates: "javascripts/templates"
+        pouchdb: "javascripts/vendor/pouchdb/pouchdb-nightly"
         angular: "javascripts/vendor/angular/angular"
-        goangular: "javascripts/vendor/goangular/goangular"
+        "angular-pouchdb": "javascripts/vendor/angular-pouchdb/angular-pouchdb"
         "angular-route": "javascripts/vendor/angular-route/angular-route"
 
       noParse: [
         "javascripts/vendor/jquery/jquery"
         "javascripts/vendor/angular/angular"
-        "javascripts/vendor/goangular/goangular"
         "javascripts/vendor/angular-route/angular-route"
       ]

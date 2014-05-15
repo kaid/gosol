@@ -1,6 +1,6 @@
 require \angular
 require \angular-route
-require \goangular
+require \angular-pouchdb
 
 require \./providers
 require \./controllers
@@ -24,9 +24,6 @@ app.config do
       .when \/ideas/:id do
         template: templates[\ideas/edit]
         controller: \IdeasEdit
-      .when \/goals do
-        template: templates[\goals/index]
-        controller: \GoalsIndex
       .when \/goals/new do
         template: templates[\goals/new]
         controller: \GoalsNew
