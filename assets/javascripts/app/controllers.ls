@@ -2,7 +2,7 @@ controllers = angular.module \gosol.controllers <[gosol.providers]>
 
 controllers.controller \ToplevelIndex do
   ($scope, GoalService)->
-    GoalService.all!.then (res)->
+    GoalService.where((doc)-> doc.toplevel).then (res)->
       $scope.goals = res.rows.map (item)-> item.key
 
 
@@ -10,8 +10,10 @@ controllers.controller \ToplevelIndex do
 controllers.controller \IdeasIndex do
   ($scope, $routeParams, IdeaService, PlanService, $location)->
     $scope.goalId = goalId = $routeParams.goalId
+
     IdeaService.all!.then (res)->
       $scope.ideas = res.rows.map (item)-> item.key
+
     $scope.link = (idea)->
       if goalId
         res <- PlanService.create(ideaId: idea._id, goalId: goalId).then
@@ -29,8 +31,10 @@ controllers.controller \IdeasNew do
 controllers.controller \IdeasEdit do
   ($scope, $routeParams, $location, IdeaService)->
     $scope.id = $routeParams.id
+
     IdeaService.find($scope.id).then (idea)->
       $scope.idea = idea
+
     $scope.save = ->
       <- IdeaService.update($scope.idea).then
       $location.url(\/ideas)
@@ -57,7 +61,6 @@ controllers.controller \GoalsEdit do
 
     PlanService.where((doc) -> doc.goalId == id).then (res)->
       $scope.plans = res.rows.map (item)-> item.key
-      console.log $scope.plans
 
     $scope.save = ->
       goal <- GoalService.update($scope.goal).then

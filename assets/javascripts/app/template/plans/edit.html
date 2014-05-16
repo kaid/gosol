@@ -1,7 +1,8 @@
-<h1>Plan: {{id}}</h1>
-<a ng-click="create()" href="javascript:;">New Goal</a>
+<h1>方案: {{id}}</h1>
+<a ng-click="create()" href="javascript:;">添加新的子目标</a>
+<a href="/#/goals/{{plan.goalId}}">返回所属目标</a>
 <div id="goals">
-  <a class="goal" ng-repeat="goal in goals" href="/#/goals/{{goal._id}}">
+  <a class="goal" ng-repeat="goal in goals | orderBy: goal.pos" href="/#/goals/{{goal._id}}">
     <div class="goal-name">{{goal.name || goal._id}}</div>
   </a>
 </div>

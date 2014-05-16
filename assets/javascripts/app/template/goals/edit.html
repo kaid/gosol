@@ -1,9 +1,18 @@
-<h1>Goal: {{id}}</h1>
-<input type="text" ng-model="goal.name">
-<input type="text" ng-model="goal.desc">
-<button ng-click="save()">save</button>
-<a href="/#/ideas?goalId={{id}}">Show ideas</a>
-<h2>Plans:</h2>
+<h1>编辑目标: {{id}}</h1>
+<label>
+  名称:
+  <input type="text" ng-model="goal.name">
+</label>
+
+<label>
+  描述:
+  <input type="text" ng-model="goal.desc">
+</label>
+<button ng-click="save()">保存</button>
+<a ng-if="goal.planId" href="/#/plans/{{goal.planId}}">返回所属方案</a>
+<a ng-if="goal.toplevel" href="/#/toplevel">返回根目标集合</a>
+<a href="/#/ideas?goalId={{id}}">打开点子集合</a>
+<h2>方案列表</h2>
 <ul ng-repeat="plan in plans">
   <li>
     <a href="/#/plans/{{plan._id}}">{{plan._id}}</a>
