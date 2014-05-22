@@ -11,22 +11,23 @@ controllers.controller \IdeasIndex do
   ($scope, $routeParams, IdeaService, PlanService, $location)->
     $scope.goalId = goalId = $routeParams.goalId
 
-    IdeaService.all!.then (res)->
+    IdeaService.where((doc)-> doc.goalId == goalId).then (res)->
       $scope.ideas = res.rows.map (item)-> item.key
+      console.log $scope.ideas
 
     $scope.link = (idea)->
-      if goalId
-        res <- PlanService.create(ideaId: idea._id, goalId: goalId).then
-        $location.url "/plans/#{res.id}"
-      else $location.url "/ideas/#{idea._id}"
+      res <- PlanService.create(ideaId: idea._id, goalId: goalId).then
+      $location.url "/plans/#{res.id}"
 
 controllers.controller \IdeasNew do
-  ($scope, $location, IdeaService)->
-    $scope.idea = type: \text
+  ($scope, $location, IdeaService, $routeParams)->
+    $scope.idea = type: \text, goalId: $routeParams.goalId
+
+    console.log $scope.idea
 
     $scope.save = ->
       <- IdeaService.create($scope.idea).then
-      $location.url(\/ideas)
+      $location.path(\/ideas)
 
 controllers.controller \IdeasEdit do
   ($scope, $routeParams, $location, IdeaService)->
@@ -37,7 +38,7 @@ controllers.controller \IdeasEdit do
 
     $scope.save = ->
       <- IdeaService.update($scope.idea).then
-      $location.url(\/ideas)
+      $location.url("/ideas?goalId=#{$scope.idea.goalId}")
 
 
 

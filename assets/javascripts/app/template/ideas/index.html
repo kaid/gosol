@@ -1,10 +1,12 @@
 <h1>点子集合</h1>
-<a ng-if="!goalId" href="/#/ideas/new">增加一个新点子</a>
+<a ng-if="goalId" href="/#/ideas/new?goalId={{goalId}}">增加一个新点子</a>
 <a ng-if="goalId" href="/#/goals/{{goalId}}">返回目标</a>
-<a ng-if="!goalId" href="/#/goals/{{goalId}}">返回根目标集合</a>
 <div id="ideas">
-  <a class="idea" ng-repeat="idea in ideas" ng-switch="idea.type" ng-click="link(idea)" href="javascript:;">
-    <div class="idea-content" ng-switch-when="text">{{idea.content}}</div>
-    <img class="idea-content" ng-switch-when="image" ng-src="{{idea.content}}">
-  </a>
+  <div class="idea" ng-repeat="idea in ideas" ng-switch="idea.type">
+    <a ng-href="/#/ideas/{{idea._id}}">
+      <div class="idea-content" ng-switch-when="text">{{idea.content}}</div>
+      <img class="idea-content" ng-switch-when="image" ng-src="{{idea.content}}">
+    </a>
+    <a ng-click="link(idea)" href="javascript:;">创建新方案</a>
+  </div>
 </div>

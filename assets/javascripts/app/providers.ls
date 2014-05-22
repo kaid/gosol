@@ -6,7 +6,7 @@ providers.factory \GosolDb (pouchdb)->
 providers.factory \ModelService (GosolDb)->
   (collectionName, propsBuilder)!->
     @where  = (cond)->
-      map = (doc, emit)-> emit(doc) if cond(doc)
+      map = (doc, emit)-> emit(doc) if cond(doc) && doc.$collection == collectionName
       GosolDb.query({map: map} {reduce: false})
 
     @all = -> 
@@ -25,9 +25,10 @@ providers.factory \ModelService (GosolDb)->
 
 providers.factory \IdeaService do
   (ModelService)->
-    {content, type} <- new ModelService \ideas
+    {content, type, goalId} <- new ModelService \ideas
     content: content
     type:    type
+    goalId:  goalId
 
 providers.factory \GoalService do
   (ModelService)->
