@@ -19,7 +19,7 @@
     由 <b>{{idea.content}}</b> 引出的方案:
     <ul>
       <li ng-repeat="plan in idea.plans" >
-        <a href="/#/plans/{{plan._id}}">{{plan._id}}</a>
+        <a href="/#/plans/{{plan._id}}">{{plan.name || plan._id}}</a>
       </li>
     </ul>
   </li>

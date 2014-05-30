@@ -10,9 +10,9 @@
     <b>已关联方案:</b>
     <ul>
       <li ng-repeat="plan in idea.plans">
-        <a href="/#/plans/{{plan._id}}">{{plan._id}}</a>
+        <a href="/#/plans/{{plan._id}}">{{plan.name || plan._id}}</a>
       </li>
     </ul>
-    <a ng-click="link(idea)" href="javascript:;">创建新方案</a>
+    <a href="/#/plans/new?ideaId={{idea._id}}&goalId={{goalId}}">创建新方案</a>
   </div>
 </div>

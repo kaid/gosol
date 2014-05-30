@@ -1,6 +1,12 @@
 <h1>方案: {{id}}</h1>
+<label>
+  名称
+  <input type="text" required ng-model="plan.name">
+</label>
+<button ng-click="save()">保存</button>
 <a ng-click="create()" href="javascript:;">添加新的子目标</a>
 <a href="/#/goals/{{plan.goalId}}">返回所属目标</a>
+<h2>子目标:</h2>
 <div id="goals">
   <a class="goal" ng-repeat="goal in goals | orderBy: goal.pos" href="/#/goals/{{goal._id}}">
     <div class="goal-name">{{goal.name || goal._id}}</div>

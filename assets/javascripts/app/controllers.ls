@@ -15,14 +15,10 @@ controllers.controller \IdeasIndex do
       $scope.ideas = res.rows.map (item)->
         idea = item.key
 
-        PlanService.where((doc)-> doc.ideaId = idea._id).then (res)->
+        PlanService.where((doc)-> doc.ideaId == idea._id).then (res)->
           idea.plans = res.rows.map (item)-> item.key
 
         idea
-
-    $scope.link = (idea)->
-      res <- PlanService.create(ideaId: idea._id, goalId: goalId).then
-      $location.url "/plans/#{res.id}"
 
 controllers.controller \IdeasNew do
   ($scope, $location, IdeaService, $routeParams)->
@@ -80,6 +76,14 @@ controllers.controller \GoalsEdit do
 
 
 
+controllers.controller \PlansNew do
+  ($scope, $location, PlanService, $routeParams)->
+    $scope.plan = ideaId: $routeParams.ideaId, goalId: $routeParams.goalId
+
+    $scope.save = ->
+      res <- PlanService.create($scope.plan).then
+      $location.path("/plans/#{res.id}")
+
 controllers.controller \PlansEdit do
   ($scope, $routeParams, PlanService, GoalService, $location)->
     $scope.id = id = $routeParams.id
@@ -90,6 +94,10 @@ controllers.controller \PlansEdit do
     GoalService.where((doc) -> doc.planId == id).then (res)->
       $scope.goals = res.rows.map (item)-> item.key
       $scope.num = res.total_rows
+
+    $scope.save = ->
+      <- PlanService.update($scope.plan).then
+      $location.url("/ideas?goalId=#{$scope.plan.goalId}")
 
     $scope.create = ->
       goal <- GoalService.create(planId: id, pos: $scope.num + 1).then

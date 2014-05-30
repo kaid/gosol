@@ -40,7 +40,8 @@ providers.factory \GoalService do
     pos:      pos
 
 providers.factory \PlanService do
-  (ModelService)->
-    {ideaId, goalId} <- new ModelService \plans
+  (ModelService, IdeaService)->
+    {ideaId, goalId, name} <- new ModelService \plans
     ideaId: ideaId
     goalId: goalId
+    name:   name

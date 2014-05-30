@@ -30,6 +30,9 @@ app.config do
       .when \/goals/:id do
         template: templates[\goals/edit]
         controller: \GoalsEdit
+      .when \/plans/new do
+        template: templates[\plans/new]
+        controller: \PlansNew
       .when \/plans/:id do
         template: templates[\plans/edit]
         controller: \PlansEdit
