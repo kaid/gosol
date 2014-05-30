@@ -7,6 +7,12 @@
       <div class="idea-content" ng-switch-when="text">{{idea.content}}</div>
       <img class="idea-content" ng-switch-when="image" ng-src="{{idea.content}}">
     </a>
+    <b>已关联方案:</b>
+    <ul>
+      <li ng-repeat="plan in idea.plans">
+        <a href="/#/plans/{{plan._id}}">{{plan._id}}</a>
+      </li>
+    </ul>
     <a ng-click="link(idea)" href="javascript:;">创建新方案</a>
   </div>
 </div>

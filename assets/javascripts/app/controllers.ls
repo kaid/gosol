@@ -12,8 +12,13 @@ controllers.controller \IdeasIndex do
     $scope.goalId = goalId = $routeParams.goalId
 
     IdeaService.where((doc)-> doc.goalId == goalId).then (res)->
-      $scope.ideas = res.rows.map (item)-> item.key
-      console.log $scope.ideas
+      $scope.ideas = res.rows.map (item)->
+        idea = item.key
+
+        PlanService.where((doc)-> doc.ideaId = idea._id).then (res)->
+          idea.plans = res.rows.map (item)-> item.key
+
+        idea
 
     $scope.link = (idea)->
       res <- PlanService.create(ideaId: idea._id, goalId: goalId).then
@@ -22,8 +27,6 @@ controllers.controller \IdeasIndex do
 controllers.controller \IdeasNew do
   ($scope, $location, IdeaService, $routeParams)->
     $scope.idea = type: \text, goalId: $routeParams.goalId
-
-    console.log $scope.idea
 
     $scope.save = ->
       <- IdeaService.create($scope.idea).then
