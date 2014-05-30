@@ -13,8 +13,14 @@
 <a ng-if="goal.toplevel" href="/#/toplevel">返回根目标集合</a>
 <a href="/#/ideas?goalId={{id}}">打开点子集合</a>
 <h2>方案列表</h2>
-<ul ng-repeat="plan in plans">
-  <li>
-    <a href="/#/plans/{{plan._id}}">{{plan._id}}</a>
+
+<ul>
+  <li ng-repeat="idea in ideas">
+    由 <b>{{idea.content}}</b> 引出的方案:
+    <ul>
+      <li ng-repeat="plan in idea.plans" >
+        <a href="/#/plans/{{plan._id}}">{{plan._id}}</a>
+      </li>
+    </ul>
   </li>
 </ul>

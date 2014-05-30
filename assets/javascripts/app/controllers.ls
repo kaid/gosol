@@ -54,14 +54,20 @@ controllers.controller \GoalsNew do
       $location.url(\/)
 
 controllers.controller \GoalsEdit do
-  ($scope, $routeParams, GoalService, PlanService, $location)->
+  ($scope, $routeParams, GoalService, PlanService, IdeaService, $location)->
     $scope.id = id = $routeParams.id
 
     GoalService.find(id).then (goal)->
       $scope.goal = goal
 
-    PlanService.where((doc) -> doc.goalId == id).then (res)->
-      $scope.plans = res.rows.map (item)-> item.key
+    IdeaService.where((doc)-> doc.goalId == id).then (res)->
+      $scope.ideas = res.rows.map (item)->
+        idea = item.key
+
+        PlanService.where((doc) -> doc.ideaId == idea._id).then (res)->
+          idea.plans = res.rows.map (item)-> item.key
+
+        idea
 
     $scope.save = ->
       goal <- GoalService.update($scope.goal).then
