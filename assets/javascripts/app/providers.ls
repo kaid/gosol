@@ -1,9 +1,14 @@
 providers = angular.module \gosol.providers <[pouchdb]>
 
-providers.factory \GosolDb (pouchdb)->
-  pouchdb.create(\gosol)
+providers.factory \GosolDb (pouchdb, remote)->
+  name = \gosol
+  db = pouchdb.create(name)
+  db.replicate.sync(remote)
+  db
 
-providers.factory \ModelService (GosolDb)->
+providers.value \remote "http://kaid.iriscouch.com:5984/gosol"
+
+providers.factory \ModelService (GosolDb, remote)->
   (collectionName, propsBuilder)!->
     @where  = (cond)->
       map = (doc, emit)-> emit(doc) if cond(doc) && doc.$collection == collectionName
@@ -18,10 +23,14 @@ providers.factory \ModelService (GosolDb)->
     @create = (params)->
       props = propsBuilder(params)
       props.$collection = collectionName
-      GosolDb.post props
+      promise = GosolDb.post props
+      GosolDb.replicate.sync(remote)
+      promise
 
     @update = (entity)->
-      GosolDb.put entity
+      promise = GosolDb.put entity
+      GosolDb.replicate.sync(remote)
+      promise
 
 providers.factory \IdeaService do
   (ModelService)->
