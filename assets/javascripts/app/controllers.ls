@@ -46,7 +46,7 @@ controllers.controller \GoalsNew do
   ($scope, $location, GoalService, $routeParams)->
     toplevel = $routeParams.toplevel == \true
 
-    $scope.goal = {toplevel: toplevel}
+    $scope.goal = {toplevel: toplevel, name: \待定}
 
     $scope.save = ->
       <-GoalService.create($scope.goal).then
@@ -78,7 +78,10 @@ controllers.controller \GoalsEdit do
 
 controllers.controller \PlansNew do
   ($scope, $location, PlanService, $routeParams)->
-    $scope.plan = ideaId: $routeParams.ideaId, goalId: $routeParams.goalId
+    $scope.plan = do
+      ideaId: $routeParams.ideaId
+      goalId: $routeParams.goalId
+      name:   \待定
 
     $scope.save = ->
       res <- PlanService.create($scope.plan).then

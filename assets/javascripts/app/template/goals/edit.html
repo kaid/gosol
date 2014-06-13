@@ -1,4 +1,4 @@
-<h1>编辑目标: {{id}}</h1>
+<h1>编辑目标: {{goal.name}}</h1>
 <label>
   名称:
   <input type="text" ng-model="goal.name">
@@ -15,10 +15,10 @@
 <h2>方案列表</h2>
 
 <ul>
-  <li ng-repeat="idea in ideas">
-    由 <b>{{idea.content}}</b> 引出的方案:
+  <li style="width:320px;padding:8px;margin-bottom:8px;border:4px solid #ccc;" ng-repeat="idea in ideas">
+    由 <a href="/#/ideas/{{idea._id}}"><b>{{idea.content}}</b></a> 引出的方案:
     <ul>
-      <li ng-repeat="plan in idea.plans" >
+      <li style="padding:4px 0;" ng-repeat="plan in idea.plans" >
         <a href="/#/plans/{{plan._id}}">{{plan.name || plan._id}}</a>
       </li>
     </ul>
