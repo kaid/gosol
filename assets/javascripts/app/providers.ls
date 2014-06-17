@@ -21,14 +21,13 @@ providers.factory \ModelService (GosolDb, remote)->
       GosolDb.get(id)
 
     @create = (params)->
-      props = propsBuilder(params)
       props.$collection = collectionName
-      promise = GosolDb.post props
+      promise = GosolDb.post propsBuilder(params)
       GosolDb.replicate.sync(remote)
       promise
 
-    @update = (entity)->
-      promise = GosolDb.put entity
+    @update = (params)->
+      promise = GosolDb.put propsBuilder(params)
       GosolDb.replicate.sync(remote)
       promise
 

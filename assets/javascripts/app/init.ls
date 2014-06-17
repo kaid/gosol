@@ -3,6 +3,8 @@ require \angular-route
 require \angular-pouchdb
 
 require \./providers
+require \./directives
+require \./lib
 require \./controllers
 
 templates = require \templates

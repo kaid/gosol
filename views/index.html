@@ -6,8 +6,26 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <h1>Gosol</h1>
-    <div ng-view></div>
+    <div class="navbar-wrapper">
+      <div class="container">
+        <nav class="navbar navbar-inverse" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a href="/#/" class="navbar-brand">Gosol</a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container" ng-view>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/reload-client.js"></script>

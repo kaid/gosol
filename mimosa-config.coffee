@@ -51,15 +51,24 @@ exports.config =
           path: "javascripts/vendor/pouchdb/pouchdb-nightly"
           exports: "PouchDB"
 
+        d3:
+          path: "javascripts/vendor/d3/d3"
+          exports: "d3"
+
       aliases:
+        "prelude-ls": "javascripts/vendor/prelude-ls/index"
         templates: "javascripts/templates"
         pouchdb: "javascripts/vendor/pouchdb/pouchdb-nightly"
         angular: "javascripts/vendor/angular/angular"
         "angular-pouchdb": "javascripts/vendor/angular-pouchdb/angular-pouchdb"
         "angular-route": "javascripts/vendor/angular-route/angular-route"
+        "angular-bootstrap": "javascripts/vendor/angular-bootstrap/ui-bootstrap-tpls"
 
       noParse: [
+        "javascripts/vendor/d3/d3"
+        "javascripts/vendor/prelude-ls/index"
         "javascripts/vendor/jquery/jquery"
         "javascripts/vendor/angular/angular"
         "javascripts/vendor/angular-route/angular-route"
+        "javascripts/vendor/angular-bootstrap/ui-bootstrap-tpls"
       ]

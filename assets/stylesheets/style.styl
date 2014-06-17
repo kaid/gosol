@@ -4,13 +4,46 @@ global-reset()
 nested-reset()
 reset-html5()
 
-body {
-    padding:64px;
-}
-
 .idea, .goal {
     padding:8px;
     display:inline-block;
     border:2px solid #ccc;
     margin:6px;
+}
+
+@import "vendor/bootstrap/bootstrap.css"
+
+body {
+    padding-top:32px;
+}
+
+gosol-tree {
+    display:block;
+    background:#eee;
+    width:100%;
+    border-radius:4px;
+}
+
+.node rect {
+  cursor:pointer;
+  fill:#fff;
+  stroke:#ccc;
+  stroke-width:1px;
+  /*fill:#428bca;*/
+}
+
+.node text {
+  font:16px sans-serif;
+  fill:#888;
+  pointer-events: none;
+}
+
+.node-label text {
+    fill:#999;
+}
+
+path.link {
+    fill:none;
+    stroke:#9ecae1;
+    stroke-width:2px;
 }

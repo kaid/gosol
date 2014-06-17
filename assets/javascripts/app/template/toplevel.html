@@ -1,7 +1,19 @@
-<h1>根目标集合</h1>
-<a href="/#/goals/new?toplevel=true">增加一个新的目标</a>
-<div id="goals">
-  <a class="goal" ng-repeat="goal in goals" href="/#/goals/{{goal._id}}">
-    <div class="goal-name">{{goal.name}}</div>
-  </a>
+<ul class="breadcrumb">
+  <li><a href="/#/">根目标集合</a></li>
+</ul>
+
+<p>
+  <a href="/#/goals/new?toplevel=true" class="btn btn-default">增加一个新的目标</a>
+</p>
+
+<div class="panel panel-default" id="goals">
+  <div class="panel-heading">Goals</div>
+
+  <div class="panel-body">
+    <a class="goal" ng-repeat="goal in goals" href="/#/goals/{{goal._id}}">
+      <div class="goal-name">{{goal.name}}</div>
+    </a>
+    <gosol-tree goals="goals"></gosol-tree>
+  </div>
 </div>
+
