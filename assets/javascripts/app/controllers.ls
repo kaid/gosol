@@ -1,10 +1,10 @@
-controllers = angular.module \gosol.controllers <[gosol.providers gosol.directives]>
+controllers = angular.module \gosol.controllers <[
+    gosol.providers gosol.directives gosol.models
+  ]>
 
 controllers.controller \ToplevelIndex do
-  ($scope, GoalService)->
-    GoalService.where((doc)-> doc.toplevel).then (res)->
-      $scope.goals = res.rows.map (item)-> item.key
-      $scope.$broadcast(\goals-loaded)
+  ($scope, Root)->
+    $scope.root = Root
 
 controllers.controller \IdeasIndex do
   ($scope, $routeParams, IdeaService, PlanService, $location)->

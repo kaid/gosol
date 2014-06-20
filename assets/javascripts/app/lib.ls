@@ -14,7 +14,7 @@ class GosolCanvas
     that = @
 
     @dispatcher = d3.dispatch(\nodeReady)
-    @tree = d3.layout.tree!.nodeSize([0, @bheight]).children(@getChildren)
+    @tree = d3.layout.tree!.nodeSize([0, @bheight])
     @diagonal = d3.svg.diagonal!.projection((d)-> [d.y, d.x + 20])
     @canvas = d3.select(@$el[0]).append(\svg)
                 .attr(\width @$el.width!)
@@ -35,25 +35,31 @@ class GosolCanvas
       return if d.root
       gBody.attr(\transform "translate(#{labelWidth + 18},0)")
 
-    @bind!
-
-  bind: ->
-    that = @
-    event <- @scope.$on \goals-loaded
-
-    that.root = do
-      goals: event.targetScope.goals
-      name: \root
-      root: true
-      x0: that.mheight / 2
-      y0: 0
-
-    that.update(that.root)
+    @root = @scope.root
+    @update(@root)
+    @getChildren(@root)
 
   getChildren: (d)->
-    return null if d.collapsed
-    return d.goals if d.root
-    null
+    that = @
+
+    func = switch d.$collection
+    | \root     => d.goals
+    | \goals    => d.ideas
+    | \ideas    => d.plans
+    | \plans    => d.goals
+    | otherwise => (fn)-> fn(d)
+
+    func.call d, (children)->
+      d.children = if d.collapsed then null else children
+      that.update(d)
+      
+  getText: (d)->
+    switch d.$collection
+    | \root     => d.name
+    | \goals    => d.name
+    | \ideas    => d.content
+    | \plans    => d.name
+    | otherwise => null
 
   resize: ->
     that = @
@@ -73,8 +79,7 @@ class GosolCanvas
 
     (d)->
       d.collapsed = if d.collapsed then false else true
-      d.children = that.getChildren(d)
-      that.update(d)
+      that.getChildren(d)
 
   updateLabel: (node)->
     label = node.append(\g)
@@ -120,7 +125,7 @@ class GosolCanvas
     body.append(\text)
          .attr(\dy 26)
          .attr(\dx 16)
-         .text((d)-> d.name)
+         .text(@getText)
          .attr(\text-rendering (d)->
            that.dispatcher.nodeReady($(this).closest(\.node), d)
            \geometricPrecision)
@@ -129,6 +134,11 @@ class GosolCanvas
          .duration(@duration)
          .attr(\transform (d)-> "translate(#{d.y},#{d.x})")
          .style(\opacity 1)
+
+    node.transition!
+        .duration(@duration)
+        .attr(\transform (d)-> "translate(#{d.y},#{d.x})")
+        .style(\opacity 1)
 
     node.exit!
         .transition!

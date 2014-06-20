@@ -9,6 +9,6 @@ directives.directive \gosolTree do
       restrict: \E
 
       scope:
-        goals: \=goals
+        root: \=root
 
       link: link

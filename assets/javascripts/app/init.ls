@@ -5,6 +5,7 @@ require \angular-pouchdb
 require \./providers
 require \./directives
 require \./lib
+require \./models
 require \./controllers
 
 templates = require \templates
