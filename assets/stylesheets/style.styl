@@ -29,7 +29,6 @@ gosol-tree {
   fill:#fff;
   stroke:#ccc;
   stroke-width:1px;
-  /*fill:#428bca;*/
 }
 
 .node text {
@@ -40,6 +39,40 @@ gosol-tree {
 
 .node-label text {
     fill:#999;
+}
+
+.node-label rect {
+    fill:#ccc;
+}
+
+.root .node-label {
+    rect {
+        fill:#5cb85c;
+    }
+    
+    text {
+        fill:#fff;
+    }
+}
+
+.goals .node-label {
+    rect {
+        fill:#428bca;
+    }
+    
+    text {
+        fill:#fff;
+    }
+}
+
+.ideas .node-label {
+    rect {
+        fill:#f0ad4e;
+    }
+    
+    text {
+        fill:#fff;
+    }
 }
 
 path.link {

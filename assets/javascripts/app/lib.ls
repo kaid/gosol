@@ -40,26 +40,29 @@ class GosolCanvas
     @getChildren(@root)
 
   getChildren: (d)->
+    if d.collapsed
+      d.children = null
+      return @update(d)
+
     that = @
 
     func = switch d.$collection
-    | \root     => d.goals
-    | \goals    => d.ideas
-    | \ideas    => d.plans
-    | \plans    => d.goals
-    | otherwise => (fn)-> fn(d)
+    | \root  => d.goals
+    | \goals => d.ideas
+    | \ideas => d.plans
+    | \plans => d.goals
 
     func.call d, (children)->
-      d.children = if d.collapsed then null else children
+      d.children = children
       that.update(d)
       
   getText: (d)->
     switch d.$collection
-    | \root     => d.name
-    | \goals    => d.name
-    | \ideas    => d.content
-    | \plans    => d.name
-    | otherwise => null
+    | \root  => d.name
+    | \goals => d.name
+    | \ideas => d.content
+    | \plans => d.name
+    | _      => null
 
   resize: ->
     that = @
@@ -84,14 +87,11 @@ class GosolCanvas
   updateLabel: (node)->
     label = node.append(\g)
                 .attr(\class \node-label)
-                .style(\display (d)->
-                  if d.root then "none" else null)
 
     label.append(\rect)
          .attr(\rx 20)
          .attr(\width 240)
          .attr(\height @bheight - 8)
-         .style(\fill \#ccc)
 
     label.append(\text)
          .attr(\text-rendering \geometricPrecision)
@@ -107,7 +107,7 @@ class GosolCanvas
                     d.id || (d.id = ++that.i))
 
     enter = node.enter!.append(\g)
-                .attr(\class \node)
+                .attr(\class (d)-> "node #{d.$collection}")
                 .attr(\transform (d)-> "translate(#{src.y0}, #{src.x0})")
 
     enter.on(\click @clickNode!)
